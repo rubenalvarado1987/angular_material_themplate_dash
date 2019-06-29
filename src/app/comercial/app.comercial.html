@@ -1,0 +1,18 @@
+
+        <div class="wrapper wrapper-content">
+          <div class="row">
+            <div class="col-lg-9">
+              <box-items-header [gridviewDetalle]="gridBoxItemsHeader" [title]="titleBoxItemsHeader" [titleResumen]="titleResumen"></box-items-header>        
+            </div> 
+            <div class="col-lg-3">
+              <app-msg-banner></app-msg-banner> 
+            </div> 
+          </div>
+          <div class="row">
+             <box-resumen  [isUpTienda]="false"    [isAscOrder]="true" ></box-resumen>
+          </div>
+          <div class="row m-t-lg">
+             <box-items-grid  [gridviewDetalle]="gridviewDetalle"></box-items-grid> 
+          </div>
+        </div>
+

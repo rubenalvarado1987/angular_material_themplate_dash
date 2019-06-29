@@ -1,0 +1,54 @@
+<div *ngIf="source!=null && source!== undefined  && source.Deptos !== undefined  && source.Deptos.length>0">
+  <div *ngFor="let item of sortData(source.Deptos)">
+    <div class="col-lg-3">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          {{item.descripcion}}
+          <i *ngFor="let i of getRanking(item.peso_tsc)" class="fa fa-star text-warning pull-right"></i>
+        </div>
+        <div class="ibox-content no-padding" style="padding:10px !important;">
+          <div class="col-xs-5 b-r">
+            <div class="col-xs-12">
+              <img *ngIf="item.descripcion !== null && item.descripcion !== undefined && item.descripcion.length > 0"
+                src="assets/img/{{item.descripcion}}.png" width="40" height="40">
+
+            </div>
+            <div class="col-xs-12 no-padding">
+              <h1 appTextColor="{{item.diff_pct}}">
+                {{item.pct_tsc_porc | pointReplacer:'1.1-1'}}%
+              </h1>
+              <label appTextColor="{{item.diff_pct}}">{{item.diff_pct | pointReplacer:'1.1-1'}}%<i class="fa" appArrow="{{item.diff_pct}}"></i></label>
+            </div>
+          </div>
+          <div class="col-xs-7 text-center no-padding">
+            <div class="col-xs-12 no-padding" style="border-bottom:1px solid #e7eaec; padding-bottom: 10px !important;">
+              <div *ngFor="let item of getItemsFromDescripcion(source.items_up, item.descripcion)" class="col-xs-12 no-padding m-l-xs">
+                <h5 *ngIf="item !== undefined" class="font-normal m-b-xs" style="white-space: nowrap;">
+                  <label tooltip='{{item.title.split("-")[1]}}' tooltipPlacement="top" style="overflow: hidden; max-width: 96px; text-overflow: ellipsis;"
+                    class="no-margins pull-left font-normal">{{item.title.split("-")[1]}}</label>
+                  <label class="no-margins pull-right font-normal" appTextColor="{{item.diff_vta_tsc}}">{{item.diff_vta_tsc
+                    | pointReplacer:'1.1-1'}}%<i class="fa" appArrow="{{item.diff_vta_tsc}}"></i></label>
+                </h5>
+              </div>
+            </div>
+
+            <div class="col-xs-12 no-padding">
+              <div *ngFor="let item of getItemsFromDescripcion(source.items_down, item.descripcion)" class="col-xs-12 no-padding m-l-xs">
+                <h5 *ngIf="item !== undefined" class="font-normal m-b-xs" style="white-space: nowrap;">
+                  <label tooltip='{{item.title.split("-")[1]}}' tooltipPlacement="top" style="overflow: hidden; max-width: 96px; text-overflow: ellipsis;"
+                    class="no-margins pull-left font-normal">{{item.title.split("-")[1]}}</label>
+                  <label class="no-margins pull-right font-normal" appTextColor="{{item.diff_vta_tsc}}">{{item.diff_vta_tsc
+                    | pointReplacer:'1.1-1'}}%<i class="fa" appArrow="{{item.diff_vta_tsc}}"></i></label>
+                </h5>
+              </div>
+            </div>
+
+          </div>
+          <div class="clearfix"></div>
+
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>

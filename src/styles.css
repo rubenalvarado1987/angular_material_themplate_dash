@@ -1,0 +1,61 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.mat-elevation-z8 {
+    box-shadow: none !important;
+  }
+  /* .msg {  z-index: 0; } */
+  .msg {
+    animation-delay: 0.5s;
+    width: 100%;
+    position: fixed;
+    height: 100%;
+    z-index:20002;  
+    left: 0px;
+    top: 0px;
+    background-color: #f3f3f4;
+    max-width: 100%;
+    animation-duration: 2s;
+}
+@media (max-width: 1030px) {
+  label.hide-label {
+    display: none;
+  }
+}
+
+.col-xs-6 > label,
+.col-md-3 > label {
+    margin-bottom: 0px;
+}
+
+
+  div > div.ibox-content > div > div > div.col-xs-10 > div > div > label {
+    font-weight: normal;
+  }
+  div > div.ibox-content > div > div > div.col-xs-10 > div:first-child > div > label {
+    font-weight: bold;
+  }
+  div > div.ibox-content > div > div > div.col-xs-2.text-center > div > label {
+    font-weight: normal;
+  }
+  div > div.ibox-content > div > div > div.col-xs-2.text-center > div > label:first-child {
+    font-weight: bold;
+  }
+
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 10%;
+  }
+
+  tr > th:first-child {
+    width: 14%;
+  }
+  tr > th:last-child {
+    width: 6%;
+  }

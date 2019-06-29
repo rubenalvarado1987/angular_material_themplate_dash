@@ -1,0 +1,130 @@
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+		<label>{{title}}</label>
+		<button type="button" (click)="getDataDetalle()" class="btn btn-xs pull-right btn-primary btn-outline m-l-xs"
+			data-toggle="modal" data-target="#modalBoxHeaderGridView"
+			ngx-analyticsOn="click"
+			angularticsLabel="{{title}}"
+			angularticsAction="Boton Detalle Totales" 
+			[angularticsCategory]="'COM-TOTALES'">Ver mas <i class="fa fa-plus"></i>
+		</button>
+	</div>
+	<div class="ibox-content">
+      <div class="col-xs-10 col-xs-offset-2">
+        <div class="row ">
+          <div class="col-xs-3">
+            <h3>Venta Retail</h3>
+          </div>
+          <div class="col-xs-3">
+            <h3>Venta TCS</h3>
+          </div>
+          <div class="col-xs-3">
+            <h3>% Part</h3>
+          </div>
+          <div class="col-xs-3">
+            <h3>Push Partner</h3>
+          </div>
+        </div>
+
+      </div>
+      <div class="ibox-content" style="padding-bottom:5px;"  *ngFor="let item of source.Deptos">
+        <div class="row">
+          <div class="col-xs-2 text-center">
+            <div class="col-xs-6 no-padding">
+                  {{item.descripcion}}
+                <img *ngIf="item.descripcion !== null && item.descripcion !== undefined && item.descripcion.length > 0" src="assets/img/{{item.descripcion}}.png" width="40">
+            </div>
+            <div class="col-xs-6">
+              <label class="hide-label">Actual</label>
+              <label class="hide-label">Anterior</label>
+              <label class="hide-label">Diferencia</label>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="row">
+              <div class="col-xs-3">
+                <label class="p-l-md no-margins">
+                  {{item.sum_vta_retail / 1000000 | pointReplacer:'1.0-0'}} $MM
+                </label>
+              </div>
+              <div class="col-xs-3">
+                <label class="p-l-md no-margins">
+                  {{item.sum_vta_tsc / 1000000 | pointReplacer:'1.0-0'}} $MM
+                </label>
+              </div>
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" class="m-l-md" >{{item.pct_tsc_porc |
+                  pointReplacer:'1.1-1'}}%
+                </label>
+              </div>
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" class="m-l-lg">
+                  {{item.sum_pushpartner_sobre_meta/1000000 | pointReplacer:'1.0-1'}} $MM
+                </label>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-xs-3">
+                <label class="p-l-md no-margins"> {{item.sum_vta_retail_aa / 1000000 | pointReplacer:'1.0-0'}} $MM
+                </label>
+              </div>
+              <div class="col-xs-3">
+                <label class="p-l-md no-margins"> {{item.sum_vta_tsc_aa / 1000000 | pointReplacer:'1.0-0'}} $MM</label>
+              </div>
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" class="m-l-md"  >{{item.pct_tsc_porc_aa|
+                    pointReplacer:'1.1-1'}}% 
+                  </label>
+              </div>
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" class="m-l-lg"> {{item.sum_pushpartner_sobre_meta_aa/1000000 | pointReplacer:'1.0-1'}} $MM</label>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" appTextColor="{{item.diff_vta_retail}}">{{item.diff_vta_retail
+                    | pointReplacer:'1.1-1'}}%
+                    <i *ngIf="item.diff_vta_retail !== null && item.diff_vta_retail !== undefined" class="fa" appArrow="{{item.diff_vta_retail}}"></i>
+                  </label>
+              </div>
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" appTextColor="{{item.diff_vta_tsc}}">{{item.diff_vta_tsc
+                    | pointReplacer:'1.1-1'}}%
+                    <i *ngIf="item.diff_vta_tsc !== null && item.diff_vta_tsc !== undefined" class="fa" appArrow="{{item.diff_vta_tsc}}"></i>
+                  </label>
+              </div>
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" class="m-l-md" appTextColor="{{item.diff_pct}}">{{item.diff_pct | pointReplacer:'1.1-1'}}%<i class="fa" appArrow="{{item.diff_pct}}"></i>
+                  </label>
+              </div>
+              <div class="col-xs-3">
+                <label style="margin-bottom: 0px;" class="m-l-lg" appTextColor="{{item.diff_pp}}">{{item.diff_pp |
+                    pointReplacer:'1.1-1'}}%<i *ngIf="item.diff_pp !== null && item.diff_pp !== undefined" class="fa" appArrow="{{item.diff_pp}}"></i></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+  </div>
+	<div id="modalBoxHeaderGridView" class="modal fade text-muted" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" style="width: 90%">
+        <div class="modal-content no-padding">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3>
+              Detalle Totales
+            </h3>
+          </div>
+          <div class="modal-body no-padding">
+            <div *ngFor="let el of gridviewDetalle;">
+              <gridview-detalle *ngIf="el.indice !== null" [dataTable]="el.dataTable" [parent]="instance" [loadDataMethodName]="'loadDataTable'"
+               [gridview]="gridview" [buttons]="el.buttons" [showWhen]="el.indice">
+              </gridview-detalle>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

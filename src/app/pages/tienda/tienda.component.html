@@ -1,0 +1,16 @@
+<div class="col-lg-12">
+		<div *ngFor="let el of gridviewDetalle;" class="ibox float-e-margins">
+			 <div class="ibox-title"> Detalle Tiendas</div>
+			 <div class="ibox-content no-padding">
+				 <gridview-detalle *ngIf="el.indice !== null"
+					  [dataTable]="el.dataTable" 
+					  [parent]="instance"
+					  [loadDataMethodName]="'loadDataTable'"
+					  [gridview]="gridview" 
+					  [buttons]="el.buttons"
+					  [showWhen]="el.indice">
+				 </gridview-detalle>
+			 </div>
+		 </div>
+	 </div>
+	 

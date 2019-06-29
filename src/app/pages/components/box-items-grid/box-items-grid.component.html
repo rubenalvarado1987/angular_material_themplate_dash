@@ -1,0 +1,318 @@
+<div  *ngFor="let item of dataTable;">
+    <div class="col-lg-3">
+        <div class="ibox m-b-xs">
+        <h3 class="ibox-title text-center">
+            {{item.descripcion}}
+            <button *ngIf="showTienda === true"  type="button"  (click)="getDataByTienda(item.descripcion)" class="btn btn-xs pull-right btn-primary btn-outline m-l-xs" data-toggle="modal"
+            data-target="#modalGridView">Tienda</button>
+
+            <button *ngIf="showDepto === true"  (click)="getDataByDepto(item)" type="button" class="btn btn-xs pull-right btn-primary btn-outline"
+            data-toggle="modal" data-target="#modalGridView">Depto</button>
+        </h3>
+        <div class="ibox-content no-padding" style="padding:5px !important; border:0px; transition: heihgt 0.3s" [ngStyle]="{'height':item.ver_mas === true ? '' : '220px', 'overflow':(item.ver_mas === true)?'':'hidden'}">
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <small class="stats-label">Vta Retail</small>
+                                <h4>${{item.sum_vta_retail/1000000 | pointReplacer:'0.0-0'}}</h4>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>${{item.sum_vta_retail_aa/1000000 | pointReplacer:'0.0-0'}}</h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Var %</small>
+                                <h4> 
+                                    <label appTextColor="{{((item.sum_vta_retail - item.sum_vta_retail_aa)/item.sum_vta_retail_aa)*100}}">{{((item.sum_vta_retail - item.sum_vta_retail_aa)/item.sum_vta_retail_aa)*100 | pointReplacer:'1.1-1'}}%<i *ngIf="(((item.sum_vta_retail - item.sum_vta_retail_aa)/item.sum_vta_retail_aa)*100) !== null && (((item.sum_vta_retail - item.sum_vta_retail_aa)/item.sum_vta_retail_aa)*100) !== undefined" class="fa" appArrow="{{((item.sum_vta_retail - item.sum_vta_retail_aa)/item.sum_vta_retail_aa)*100}}"></i></label>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <small class="stats-label">Vta TCS</small>
+                                <h4>${{item.sum_vta_tsc/1000000 | pointReplacer:'0.0-0'}}</h4>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>${{item.sum_vta_tsc_aa/1000000 | pointReplacer:'0.0-0'}}</h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Var %</small>
+                                <h4>
+                                    <label appTextColor="{{((item.sum_vta_tsc - item.sum_vta_tsc_aa)/item.sum_vta_tsc_aa)*100}}">{{((item.sum_vta_tsc - item.sum_vta_tsc_aa)/item.sum_vta_tsc_aa)*100 | pointReplacer:'1.1-1'}}%<i *ngIf="(((item.sum_vta_tsc - item.sum_vta_tsc_aa)/item.sum_vta_tsc_aa)*100) !== null && (((item.sum_vta_tsc - item.sum_vta_tsc_aa)/item.sum_vta_tsc_aa)*100) !== undefined" class="fa" appArrow="{{((item.sum_vta_tsc - item.sum_vta_tsc_aa)/item.sum_vta_tsc_aa)*100}}"></i></label>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <small class="stats-label">Participación</small>
+                                <h4>
+                                    <label  >{{item.pct_tsc_porc  | pointReplacer:'1.1-1'}}% </label>
+
+                                </h4>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>
+                                    <label >{{item.pct_tsc_porc_aa  | pointReplacer:'1.1-1'}}%</label>
+
+                                </h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Dif</small>
+                                <h4>
+                                    <label appTextColor="{{item.pct_tsc_porc - item.pct_tsc_porc_aa}}">{{item.pct_tsc_porc - item.pct_tsc_porc_aa  | pointReplacer:'1.1-1'}}%<i *ngIf="item.pct_tsc_porc - item.pct_tsc_porc_aa  !== null && item.pct_tsc_porc - item.pct_tsc_porc_aa  !== undefined" class="fa" appArrow="{{item.pct_tsc_porc - item.pct_tsc_porc_aa}}"></i></label>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <small class="stats-label">Push Partner</small>
+                                <h4>${{item.sum_pushpartner_sobre_meta/1000000 | pointReplacer:'1.1-1'}}</h4>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>${{item.sum_pushpartner_sobre_meta_aa/1000000 | pointReplacer:'1.1-1'}}</h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Var %</small>
+                                <h4>
+                                        <label appTextColor="{{((item.sum_pushpartner_sobre_meta - item.sum_pushpartner_sobre_meta_aa) / item.sum_pushpartner_sobre_meta_aa) *100 | number:'1.1-1'}}">{{((item.sum_pushpartner_sobre_meta - item.sum_pushpartner_sobre_meta_aa) / item.sum_pushpartner_sobre_meta_aa) *100 | pointReplacer:'1.1-1'}}%<i *ngIf="((item.sum_pushpartner_sobre_meta - item.sum_pushpartner_sobre_meta_aa) / item.sum_pushpartner_sobre_meta_aa) *100 !== null && ((item.sum_pushpartner_sobre_meta - item.sum_pushpartner_sobre_meta_aa) / item.sum_pushpartner_sobre_meta_aa) *100 !== undefined" class="fa" appArrow="{{((item.sum_pushpartner_sobre_meta - item.sum_pushpartner_sobre_meta_aa) / item.sum_pushpartner_sobre_meta_aa) *100 | number:'1.1-1'}}"></i></label>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <small class="stats-label">Recargo</small>
+                                <h4>${{item.sum_vta_recargo/1000000 | pointReplacer:'1.1-1'}}</h4>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>${{item.vta_recargo_aa/1000000 | pointReplacer:'1.1-1'}}</h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Var %</small>
+                                <h4>
+                                        <label appTextColor="{{((item.sum_vta_recargo - item.vta_recargo_aa) / item.vta_recargo_aa) * 100 | number:'1.1-1'}}">{{((item.sum_vta_recargo - item.vta_recargo_aa) / item.vta_recargo_aa) *100 | pointReplacer:'1.1-1'}}%<i *ngIf="((item.sum_vta_recargo - item.vta_recargo_aa) / item.vta_recargo_aa) *100 !== null && ((item.sum_vta_recargo - item.vta_recargo_aa) / item.vta_recargo_aa) *100 !== undefined" class="fa" appArrow="{{((item.sum_vta_recargo - item.vta_recargo_aa) / item.vta_recargo_aa) *100 | number:'1.1-1'}}"></i></label>
+
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4" style="padding-right: 0px">
+                                <small class="stats-label">Vta con interés</small>
+                                <h4>
+                                        ${{item.vta_interes/1000000 | pointReplacer:'1.0-0'}}
+                                </h4>
+                                
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>
+                                        ${{item.vta_interes_aa/1000000 | pointReplacer:'1.0-0'}}
+                                </h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Var %</small>
+                                <h4>
+                                        <label appTextColor="{{((item.vta_interes - item.vta_interes_aa) / item.vta_interes_aa) *100}}">{{((item.vta_interes - item.vta_interes_aa) / item.vta_interes_aa) *100 | pointReplacer:'1.1-1'}}%
+                                            <i *ngIf="item.vta_interes !== undefined && item.vta_interes_aa !== undefined" class="fa" appArrow="{{((item.vta_interes - item.vta_interes_aa) / item.vta_interes_aa) *100}}"></i></label>
+
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4" style="padding-right: 0px">
+                                <small class="stats-label">Vta interés en %</small>
+                                <h4>
+                                        {{ (item.vta_interes / item.sum_vta_tsc) * 100  | pointReplacer:'1.1-1'}}%
+                                </h4>
+                                
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>
+                                        {{ (item.vta_interes_aa / item.sum_vta_tsc_aa) * 100 | pointReplacer:'1.1-1'}}%
+                                </h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Dif %</small>
+                                <h4>
+                                    <label appTextColor="{{((item.vta_interes / item.sum_vta_tsc) * 100) - ((item.vta_interes_aa / item.sum_vta_tsc_aa) * 100)}}">{{((item.vta_interes / item.sum_vta_tsc) * 100) - ((item.vta_interes_aa / item.sum_vta_tsc_aa) * 100) | pointReplacer:'1.1-1'}}%
+                                        <i *ngIf="item.vta_interes !== undefined && item.vta_interes_aa !== undefined" class="fa" appArrow="{{((item.vta_interes / item.sum_vta_tsc) * 100) - ((item.vta_interes_aa / item.sum_vta_tsc_aa) * 100)}}"></i></label>
+
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4" style="padding-right: 0px">
+                                <small class="stats-label">Cuota promedio</small>
+                                <h4>{{item.cuota_avg | pointReplacer:'1.00-2'}} </h4>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>{{item.cuota_avg_aa | pointReplacer:'1.00-2'}} </h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Dif</small>
+                                   <h4>
+                                   <label appTextColor="{{item.cuota_avg - item.cuota_avg_aa}}">{{item.cuota_avg - item.cuota_avg_aa | pointReplacer:'1.00-2'}}<i class="fa" appArrow="{{item.cuota_avg - item.cuota_avg_aa}}"></i></label>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="ibox m-b-xs">
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            <div class="col-xs-4" style="padding-right: 0px">
+                                <small class="stats-label">Nº Trx Retail</small>
+                                <h4>
+                                        {{item.count | pointReplacer:'1.0-1'}}  
+                                </h4>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <small class="stats-label">Anterior</small>
+                                <h4>
+                                        {{item.count_aa | pointReplacer:'1.0-1'}}  
+                                </h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Var %</small>
+                                <h4>
+                                        <label appTextColor="{{((item.count - item.count_aa) / item.count_aa) *100 | number:'1.1-1'}}">{{((item.count - item.count_aa) / item.count_aa) *100 | number:'1.1-1'}}%<i *ngIf="((item.count - item.count_aa) / item.count_aa) *100 !== null && ((item.count - item.count_aa) / item.count_aa) *100 !== undefined" class="fa" appArrow="{{((item.count - item.count_aa) / item.count_aa) *100 }}"></i></label>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                    <div class="ibox m-b-xs">
+                        <div class="ibox-content no-padding">
+                            <div class="row">
+                                <div class="col-xs-4" style="padding-right: 0px">
+                                    <small class="stats-label">N Trx TCS</small>
+                                    <h4>
+                                            {{item.count_trans  | pointReplacer:'1.0-1'}}  
+                                    </h4>
+                                </div>
+    
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Anterior</small>
+                                    <h4>
+                                            {{ item.count_trans_aa| pointReplacer:'1.0-1'}}  
+                                    </h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Var %</small>
+                                    <h4>
+                                            <label appTextColor="{{item.diff_count_trans}}">{{item.diff_count_trans| pointReplacer:'1.0-1'}}%<i  class="fa" appArrow="{{item.diff_count_trans}}"></i></label>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+    
+            <div class="clearfix"></div>
+    
+        </div>
+        <div class="ibox-content">
+            <button *ngIf="item.ver_mas !== true" (click)="item.ver_mas = true" class="btn btn-block btn-primary">Ver mas <i class="fa fa-plus"></i></button>
+            <button *ngIf="item.ver_mas === true" (click)="item.ver_mas = false" class="btn btn-block btn-primary">Ver menos <i class="fa fa-minus"></i></button>
+        </div>
+        <div class="clearfix"></div>
+        </div> 
+    </div>
+</div>
+ 
+<div id="modalGridView" class="modal fade text-muted" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 90%">
+        <div class="modal-content no-padding">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3>
+                    <a (click)="resetNavegacion()" class="m-r-lg text-muted"><i class="fa fa-home"></i> {{gridview.tituloActivo}}</a> 
+                    <label *ngIf="gridview.niveles[1] !== null">{{gridview.niveles[1].descripcion}}&nbsp; </label> <a [ngClass]="gridview.nivelActivo === 1?'text-navy':'text-muted'" *ngIf="gridview.niveles[1] !== null" (click)="setTituloActivo(gridview.niveles, 1)" class="animated fadeInRight m-r-xs"><i class="fa fa-angle-right"></i> {{gridview.niveles[1].titulo}}</a> 
+                    <label *ngIf="gridview.niveles[2] !== null">{{gridview.niveles[2].descripcion}}&nbsp; </label> <a [ngClass]="gridview.nivelActivo === 2?'text-navy':'text-muted'" *ngIf="gridview.niveles[2] !== null" (click)="setTituloActivo(gridview.niveles, 2)" class="animated fadeInRight m-r-xs"><i class="fa fa-angle-right"></i> {{gridview.niveles[2].titulo}}</a> 
+                    <label *ngIf="gridview.niveles[3] !== null">{{gridview.niveles[3].descripcion}}&nbsp; </label> <a [ngClass]="gridview.nivelActivo === 3?'text-navy':'text-muted'" *ngIf="gridview.niveles[3] !== null" (click)="setTituloActivo(gridview.niveles, 3)" class="animated fadeInRight m-r-xs"><i class="fa fa-angle-right"></i> {{gridview.niveles[3].titulo}}</a> 
+                    <label *ngIf="gridview.niveles[4] !== null">{{gridview.niveles[4].descripcion}}&nbsp; </label> <a [ngClass]="gridview.nivelActivo === 4?'text-navy':'text-muted'" *ngIf="gridview.niveles[4] !== null" (click)="setTituloActivo(gridview.niveles, 4)" class="animated fadeInRight m-r-xs"><i class="fa fa-angle-right"></i> {{gridview.niveles[4].titulo}}</a> 
+                    
+                </h3>
+            </div>
+            <div class="modal-body no-padding">
+                <div *ngFor="let el of gridviewDetalle;" >
+                    <gridview-detalle *ngIf="el.indice !== null"
+                        [dataTable]="el.dataTable" 
+                        [parent]="instance"
+                        [loadDataMethodName]="'loadDataTable'"
+                        [gridview]="gridview" 
+                        [buttons]="el.buttons"
+                        [showWhen]="el.indice">
+                    </gridview-detalle>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

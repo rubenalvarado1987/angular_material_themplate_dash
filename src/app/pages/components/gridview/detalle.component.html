@@ -1,0 +1,184 @@
+<div class="col-sm-12 no-padding" *ngIf="gridview.depto.view === showWhen">
+
+    <div class="col-sm-12 white-bg" *ngIf="showLoaging">
+
+        <div class="animated fadeIn p-lg" style="animation-iteration-count: infinite">
+
+            <mat-spinner class="center-block"></mat-spinner>
+        </div>
+    </div>
+    <div class="col-sm-12 white-bg p-sm">
+        <div class="col-sm-6 col-sm-offset-2">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar registros..." [formControl]="filterFormControl">
+            </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+            <button
+                ngx-analyticsOn="click"
+                angularticsAction="Descargar Lista Excel" 
+                [angularticsCategory]="showWhen+'-BTN-DOWNLOAD'"
+                class="btn btn-md btn-primary btn-outline m-t-sm" type="button" (click)="downloadTable()">
+                Descargar Lista
+                <i class="fa fa-file-excel-o"></i>
+            </button>
+        </div>
+    </div>
+    <div class="mat-elevation-z8">
+        <table #table style="display:none;">
+            <thead>
+                <tr>
+                    <th>...</th>
+                    <th>Venta Retail</th>
+                    <th>Venta TCS</th>
+                    <th>% Participacion</th>
+                    <th>Push Partner</th>
+                    <th>Recargo</th>
+                    <th>Venta con Interés</th>
+                    <th>Venta Interés %</th>
+                    <th>Cuota Promedio</th>
+                    <th>Número Trx Retail</th>
+                    <th>Número Trx TCS</th>
+                    <th>Venta Retail AA</th>
+                    <th>Venta TCS AA</th>
+                    <th>% Participacion AA</th>
+                    <th>Push Partner AA</th>
+                    <th>Recargo AA</th>
+                    <th>Venta con Interés AA</th>
+                    <th>Venta Interés % AA</th>
+                    <th>Cuota Promedio AA</th>
+                    <th>Número Trx Retail AA</th>
+                    <th>Número Trx TCS AA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of rawData">
+                    <td>{{row.title}}</td>
+                    <td>{{row.sum_vta_retail }}</td>
+                    <td>{{row.sum_vta_tsc }}</td>
+                    <td>{{row.pct_tsc_porc}}</td>
+                    <td>{{row.sum_pushpartner_sobre_meta }}</td>
+                    <td>{{row.sum_vta_recargo }}</td>
+                    <td>{{row.vta_interes }}</td>
+                    <td>{{(row.vta_interes / row.sum_vta_tsc) *100}}</td>
+                    <td>{{row.cuota_avg }}</td>
+                    <td>{{row.count }}</td>
+                    <td>{{row.count_trans}}</td>
+                    <td>{{row.sum_vta_retail_aa }}</td>
+                    <td>{{row.sum_vta_tsc_aa }}</td>
+                    <td>{{row.pct_tsc_porc_aa}}</td>
+                    <td>{{row.sum_pushpartner_sobre_meta_aa }}</td>
+                    <td>{{row.sum_vta_recargo_aa }}</td>
+                    <td>{{row.vta_interes_aa }}</td>
+                    <td>{{(row.vta_interes_aa / row.sum_vta_tsc_aa) *100}}</td>
+                    <td>{{row.cuota_avg_aa }}</td>
+                    <td>{{row.count_aa }}</td>
+                    <td>{{row.count_trans_aa}}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table *ngIf="dataTable !== null && dataTable !== undefined" mat-table [dataSource]="dataTable" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ... </th>
+                <td mat-cell *matCellDef="let row">
+                    <label *ngIf="row.showLink !== true">{{row.title}}</label>
+                    <a *ngIf="row.showLink === true" target="_blank" href="https://www.paris.cl/{{row.title}}.html">{{row.title}}</a>
+                    <div style="margin-left: 20px">Actual</div>
+                    <div style="margin-left: 20px">Anterior</div>
+                    <div class="m-b-xs" style="margin-left: 20px">Diferencia</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sum_vta_retail">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Venta Retail </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">$ {{row.sum_vta_retail | pointReplacer:'0.0-0'}}</div>
+                    <div>$ {{row.sum_vta_retail_aa | pointReplacer:'0.0-0'}}</div>
+                    <div appTextColor="{{row.diff_vta_retail}}">{{row.diff_vta_retail | pointReplacer:'0.2-2'}}%</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sum_vta_tsc">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Venta TCS </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">$ {{row.sum_vta_tsc | pointReplacer:'0.0-0'}} </div>
+                    <div>$ {{row.sum_vta_tsc_aa | pointReplacer:'0.0-0'}} </div>
+                    <div appTextColor="{{row.diff_vta_tsc}}">{{row.diff_vta_tsc | pointReplacer:'0.2-2'}}%</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="pct_tsc_porc">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> % Part </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">{{row.pct_tsc_porc| pointReplacer:'0.2-2'}}% </div>
+                    <div>{{row.pct_tsc_porc_aa| pointReplacer:'0.2-2'}}% </div>
+                    <div appTextColor="{{row.diff_pct}}">{{row.diff_pct| pointReplacer:'0.2-2'}}% </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sum_pushpartner_sobre_meta">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Push Partner </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">$ {{row.sum_pushpartner_sobre_meta | pointReplacer:'0.0-0'}}</div>
+                    <div>$ {{row.sum_pushpartner_sobre_meta_aa | pointReplacer:'0.0-0'}}</div>
+                    <div appTextColor="{{row.diff_pp}}">{{row.diff_pp | pointReplacer:'0.2-2'}}%</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sum_vta_recargo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Recargo </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">$ {{row.sum_vta_recargo | pointReplacer:'0.0-0'}}</div>
+                    <div>$ {{row.vta_recargo_aa | pointReplacer:'0.0-0'}}</div>
+                    <div appTextColor="{{row.diff_recargo}}">{{row.diff_recargo | pointReplacer:'0.2-2'}}%</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="vta_interes">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Vta con interés </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">$ {{row.vta_interes | pointReplacer:'0.0-0'}}</div>
+                    <div>$ {{row.vta_interes_aa | pointReplacer:'0.0-0'}}</div>
+                    <div appTextColor="{{row.diff_interes}}">{{row.diff_interes | pointReplacer:'0.2-2'}}%</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="cuota_promedio">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cuota Promedio </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">{{row.cuota_avg | pointReplacer:'0.2-2'}}</div>
+                    <div>{{row.cuota_avg_aa | pointReplacer:'0.2-2'}}</div>
+                    <div appTextColor="{{row.diff_cuota_avg}}">{{row.cuota_avg - row.cuota_avg_aa | pointReplacer:'0.2-2'}}</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nº Trx TCS</th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="m-t-md">{{row.count_trans | pointReplacer:'0.0-0'}}</div>
+                    <div>{{row.count_trans_aa | pointReplacer:'0.0-0'}}</div>
+                    <div appTextColor="{{row.diff_count_trans}}">{{row.diff_count_trans | pointReplacer:'0.2-2'}}%</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="botones">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let row">
+                    <div *ngIf="showDropDownButton == true">
+                        <button (click)="setZIndex()" [matMenuTriggerFor]="menu" mat-raised-button>
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <mat-menu #menu="matMenu" style="z-index:2050 !important">
+                            <button mat-menu-item *ngFor="let btn of buttons" (click)="setSelected(btn, row)" 
+                                ngx-analyticsOn="click"
+                                angularticsLabel="{{row.title}}"
+                                angularticsAction="Boton Detalle" 
+                                [angularticsCategory]="btn.indice">
+                            
+                                <span>{{btn.titulo}}</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
+    </div>
+</div>

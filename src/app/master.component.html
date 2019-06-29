@@ -1,0 +1,50 @@
+<div id="wrapper">
+  <header>
+    <nav class="navbar-default navbar-static-side" role="navigation">
+      <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+          <li class="active">
+            <a (click)="goToPage('paris/comercial',[1])"><i tooltip="Paris
+              Comercial" tooltipPlacement="right"
+                class="fa fa-pie-chart"></i> </a>
+          </li>
+          <li class="active">
+            <a (click)="goToPage('paris/operacional',[1])"><i tooltip="Paris
+              Operacional"
+                tooltipPlacement="right" class="fa fa-map-marker"></i> </a>
+          </li>
+          <li class="active">
+            <a (click)="goToPage('johnson/comercial',[2])"><i tooltip="Johnson
+              Comercial"
+                tooltipPlacement="right" class="fa fa-pie-chart"></i>
+            </a>
+          </li>
+          <li class="active">
+            <a (click)="goToPage('johnson/operacional',[2])"><i tooltip="Johnson
+              Operacional"
+                tooltipPlacement="right" class="fa fa-map-marker"></i>
+            </a>
+          </li>
+          <li class="active">
+            <a style="padding: 18px;" (click)="goToPage('paris-cl/comercial',[1],[32])"> <img tooltip="Paris.cl Comercial"
+                tooltipPlacement="right" src="assets/img/Paris.cl.png" width="25"></a>
+          </li>
+          <li class="active">
+
+            <a style="padding:10px;" (click)="goToPage('cadenas-txd',[1,2])">
+              <img tooltip="Cadenas TxD" tooltipPlacement="right" src="assets/img/TxD.png" width="35">
+            </a>
+
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+    <app-header (eventChange)="change($event)"></app-header>
+  </header>
+  <div id="page-wrapper" class="gray-bg dashbard-1" style="margin-top: 49px;">
+    <app-header (eventChange)="change($event)"></app-header>
+    <app-placeholder name="main"> </app-placeholder>
+    <router-outlet name="master"></router-outlet>
+  </div>
+</div>
