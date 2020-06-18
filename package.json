@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
     "@swimlane/ngx-charts": "^10.0.0",
-    "angular": "^1.7.5",
+    "angular": "^1.8.0",
     "core-js": "^2.5.4",
     "css-minify": "^1.0.1",
     "date-fns": "^1.30.1",
